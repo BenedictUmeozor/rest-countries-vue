@@ -9,9 +9,7 @@ const queryClient = new QueryClient()
 
 const app = createApp(App)
 
-app.use(VueQueryPlugin)
+app.use(VueQueryPlugin, { queryClient })
 app.use(router)
-
-app.provide('queryClient', queryClient)
 
 app.mount('#app')

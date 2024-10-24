@@ -80,6 +80,14 @@ const onQueryChange = (value: string | null) => {
           :country="country"
         />
       </div>
+      <div
+        v-show="!filteredCountries.length && !isPending"
+        class="grid h-52 place-items-center"
+      >
+        <h2 className="text-base font-medium">
+          No results returned for your search
+        </h2>
+      </div>
     </AppContainer>
   </main>
 </template>

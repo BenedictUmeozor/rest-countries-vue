@@ -16,6 +16,7 @@ const prefetch = () =>
       )
       return res.json()
     },
+    staleTime: Infinity,
   })
 </script>
 

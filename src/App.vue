@@ -8,5 +8,15 @@ import ThemeProvider from './providers/ThemeProvider.vue'
   <ThemeProvider>
     <AppHeader />
     <RouterView />
+    <footer class="py-8 text-center text-sm text-neutral-dark-gray">
+      &copy; {{ new Date().getFullYear() }}
+      <a
+        href="https://benedictumeozor.vercel.app"
+        target="_blank"
+        class="hover:underline"
+      >
+        Benedict
+      </a>
+    </footer>
   </ThemeProvider>
 </template>
