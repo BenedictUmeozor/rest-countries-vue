@@ -68,7 +68,7 @@ module.exports = {
         },
       },
       fontFamily: {
-        sans: ['Nunito', 'sans-serif'],
+        sans: ['Nunito Sans', 'sans-serif'],
       },
       borderRadius: {
         xl: 'calc(var(--radius) + 4px)',
