@@ -1,5 +1,12 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { RouterView } from 'vue-router'
+import AppHeader from './components/shared/AppHeader.vue'
+import ThemeProvider from './providers/ThemeProvider.vue'
+</script>
 
 <template>
-  <h1>Hello</h1>
+  <ThemeProvider>
+    <AppHeader />
+    <RouterView />
+  </ThemeProvider>
 </template>

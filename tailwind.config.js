@@ -2,7 +2,7 @@ import animate from 'tailwindcss-animate'
 
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  darkMode: ['class'],
+  darkMode: 'selector',
   safelist: ['dark'],
   prefix: '',
 
@@ -66,6 +66,9 @@ module.exports = {
           DEFAULT: 'hsl(var(--card))',
           foreground: 'hsl(var(--card-foreground))',
         },
+      },
+      fontFamily: {
+        sans: ['Nunito', 'sans-serif'],
       },
       borderRadius: {
         xl: 'calc(var(--radius) + 4px)',
