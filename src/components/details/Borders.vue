@@ -29,7 +29,7 @@ const results = useQueries({
 const prefetch = (name?: string) => {
   if (name) {
     queryClient.prefetchQuery({
-      queryKey: ['country', name],
+      queryKey: ['border', name],
       queryFn: async (): Promise<Country[]> => {
         const res = await fetch(
           `https://restcountries.com/v3.1/name/${name}?fullText=true`,
@@ -52,7 +52,7 @@ const prefetch = (name?: string) => {
         :to="`/countries/${country?.name.common}`"
         class="rounded bg-neutral-white p-2 text-sm shadow dark:bg-neutral-dark-blue"
         @onmouseover="prefetch(country?.name.common)"
-        >{{ country?.name.common }}</RouterLink
+        >{{ country?.name.common || 'loading...' }}</RouterLink
       >
     </li>
   </ul>

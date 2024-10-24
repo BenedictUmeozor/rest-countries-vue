@@ -8,6 +8,7 @@ import AppContainer from '@/components/shared/AppContainer.vue'
 import NotFound from './NotFound.vue'
 import Borders from '@/components/details/Borders.vue'
 import type { Country } from '@/interfaces'
+import { Skeleton } from '@/components/ui/skeleton'
 
 const route = useRoute()
 const routeName = route.params.name as string
@@ -30,6 +31,7 @@ const { data, isPending, isError, refetch } = useQuery({
       throw error
     }
   },
+  staleTime: Infinity,
   enabled: !!currentParam.value,
 })
 
@@ -59,7 +61,7 @@ watch(
 
   <NotFound v-else-if="isError" />
 
-  <main v-else-if="data" class="py-8">
+  <main v-else="data" class="py-8">
     <AppContainer class="space-y-12 max-lg:max-w-3xl">
       <RouterLink
         to="/"
@@ -71,45 +73,50 @@ watch(
       <div
         class="grid grid-cols-1 gap-x-16 gap-y-8 lg:grid-cols-2 lg:items-center"
       >
-        <div>
+        <div v-if="data?.flags">
           <img
-            :src="data.flags.svg"
-            :alt="data.name.common"
+            :src="data?.flags.svg"
+            :alt="data?.name?.common"
             class="aspect-[6/4] w-full rounded object-cover"
           />
         </div>
+        <div v-else>
+          <Skeleton class="aspect-[6/4] w-full rounded" />
+        </div>
 
         <div class="space-y-8">
-          <h1 class="text-2xl font-semibold lg:text-3xl">
-            {{ data.name.common }}
+          <h1 v-show="data?.name" class="text-2xl font-semibold lg:text-3xl">
+            {{ data?.name.common }}
           </h1>
 
           <div class="gap-8 max-lg:space-y-8 lg:flex lg:items-start">
             <ul class="flex-1 space-y-4">
               <li class="flex items-start gap-2">
                 <span class="font-medium">Native Name:</span>
-                <span class="text-neutral-dark-gray">{{
-                  data.name.official
+                <span v-show="data?.name" class="text-neutral-dark-gray">{{
+                  data?.name.official
                 }}</span>
               </li>
               <li class="flex items-start gap-2">
                 <span class="font-medium">Population:</span>
                 <span class="text-neutral-dark-gray">{{
-                  data.population?.toLocaleString()
+                  data?.population?.toLocaleString()
                 }}</span>
               </li>
               <li class="flex items-start gap-2">
                 <span class="font-medium">Region:</span>
-                <span class="text-neutral-dark-gray">{{ data.region }}</span>
+                <span class="text-neutral-dark-gray">{{ data?.region }}</span>
               </li>
               <li class="flex items-start gap-2">
                 <span class="font-medium">Sub Region:</span>
-                <span class="text-neutral-dark-gray">{{ data.subregion }}</span>
+                <span class="text-neutral-dark-gray">{{
+                  data?.subregion
+                }}</span>
               </li>
               <li class="flex items-start gap-2">
                 <span class="font-medium">Capital:</span>
                 <span class="text-neutral-dark-gray">{{
-                  data.capital?.[0]
+                  data?.capital?.[0]
                 }}</span>
               </li>
             </ul>
@@ -118,15 +125,15 @@ watch(
               <li class="flex items-start gap-2">
                 <span class="font-medium">UN Member:</span>
                 <span class="text-neutral-dark-gray">{{
-                  data.unMember ? 'Yes' : 'No'
+                  data?.unMember ? 'Yes' : 'No'
                 }}</span>
               </li>
               <li class="flex items-start gap-2">
                 <span class="font-medium">Currencies:</span>
                 <span class="text-neutral-dark-gray">
                   {{
-                    data.currencies &&
-                    Object.entries(data.currencies)
+                    data?.currencies &&
+                    Object.entries(data?.currencies)
                       .map(([_, curr]) => `${curr.name} (${curr.symbol})`)
                       .join(', ')
                   }}
@@ -136,7 +143,7 @@ watch(
                 <span class="font-medium">Languages:</span>
                 <span class="text-neutral-dark-gray">
                   {{
-                    data.languages && Object.values(data.languages).join(', ')
+                    data?.languages && Object.values(data?.languages).join(', ')
                   }}
                 </span>
               </li>
@@ -145,10 +152,10 @@ watch(
 
           <div class="items-center gap-2 max-lg:space-y-4 lg:flex">
             <h2 class="font-medium">Border Countries:</h2>
-            <span v-if="!data.borders?.length" class="text-neutral-dark-gray">
+            <span v-if="!data?.borders?.length" class="text-neutral-dark-gray">
               No border countries
             </span>
-            <Borders v-else :borders="data.borders" />
+            <Borders v-else :borders="data?.borders" />
           </div>
         </div>
       </div>
