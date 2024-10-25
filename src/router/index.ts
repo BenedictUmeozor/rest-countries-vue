@@ -15,6 +15,7 @@ const router = createRouter({
       path: '/countries/:name',
       name: 'country',
       component: CountryView,
+      props: true,
     },
     {
       path: '/:pathMatch(.*)*',
